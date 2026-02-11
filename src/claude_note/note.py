@@ -1,4 +1,3 @@
-import random
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -21,21 +20,3 @@ def add_note(path: Path, content: str) -> Note:
         f.write(content + "\n")
 
     return Note(path)
-
-
-# TODO: implement a real categorization algorithm
-def categorize(note: Note, categories: list[str]) -> str:
-    if not categories:
-        return "Uncategorized"
-    category: str = random.choice(categories)
-    return category
-
-
-# TODO: implement a real summarization algorithm
-def summarize(notes: list[Note]) -> str:
-    summaries: list[str] = []
-    for note in notes:
-        content = read_note(note)
-        summary = content[:100]
-        summaries.append(summary)
-    return "\n".join(summaries)
