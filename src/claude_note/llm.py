@@ -3,15 +3,18 @@
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Literal
 
 
-@dataclass
+@dataclass(frozen=True)
 class ClaudeConfig:
-    cmd: list[str] = field(default_factory=lambda: ["claude", "-p"])
     model: Literal["haiku", "sonnet", "opus"] = "sonnet"
-    timeout: int = 120
+    timeout: int = 30
+
+    @property
+    def cmd(self) -> list[str]:
+        return ["claude", "--model", self.model, "-p"]
 
 
 async def ask_claude(prompt: str, config: ClaudeConfig) -> str:
